@@ -3,10 +3,13 @@ import { pool } from "./db/pool.js";
 
 const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+const startServer = async () => {
+    await pool.query("SELECT NOW()");
+    console.log("Database connected successfully");
 
-pool.query("SELECT NOW()")
-    .then(() => console.log("Database connected successfully"))
-    .catch((err) => console.error("Database connection error:", err));
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+}
+
+startServer();
